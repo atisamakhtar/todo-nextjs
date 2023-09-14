@@ -3,6 +3,7 @@
 import { ACTION } from 'next/dist/client/components/app-router-headers';
 import React from 'react';
 import { useReducer, useState } from 'react';
+import Record from './record';
 
 const redFunc = (currState: any, action: any) => {
 
@@ -111,22 +112,27 @@ const MyForm = () => {
                         </div>
                     }
 
-                    {(states.data.length > 0) && <table className='my-10' >
-                        <thead>
+                    {(states.data.length > 0) && <div className='my-10' >
+                        {/* <thead>
                             <tr className='text-left' >
                                 <th> Title </th>
                                 <th className='pl-20' > Description </th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {states.data.map((singData: any, index: any) => (
-                                <tr className='text-left' key={index}>
-                                    <td> <h2>{singData.title}</h2> </td>
-                                    <td> <p className='pl-20'>{singData.description}</p> </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>}
+                        </thead> */}
+                        {/* <tbody> */}
+                        {states.data.map((singData: any, index: any) => (
+                            // <tr className='text-left' key={index}>
+                            //     <td> <h2>{singData.title}</h2> </td>
+                            //     <td> <p className='pl-20'>{singData.description}</p> </td>
+                            // </tr>
+                            <Record
+                                key={index}
+                                title={singData.title}
+                                description={singData.description}
+                            />
+                        ))}
+                        {/* </tbody> */}
+                    </div>}
 
                 </section>
             </section>
