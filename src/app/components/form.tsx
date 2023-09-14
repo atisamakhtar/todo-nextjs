@@ -7,19 +7,19 @@ import { useReducer, useState } from 'react';
 const redFunc = (currState: any, action: any) => {
 
     if (action.type === "titleUpdate") {
-        // console.log("updating title");
+        // // console.log("updating title");
         return {
             ...currState,
             title: action.payload,
         }
     } else if (action.type === "descUpdate") {
-        // console.log("updating title");
+        // // console.log("updating title");
         return {
             ...currState,
             description: action.payload,
         }
     } else if (action.type === "pushData") {
-        console.log("pushing data to array");
+        // console.log("pushing data to array");
 
         currState.data.push({
             title: action.payload.title,
@@ -30,6 +30,11 @@ const redFunc = (currState: any, action: any) => {
             ...currState,
             data: currState.data,
         }
+    } else if (action.type === "setError") {
+        return {
+            ...currState,
+            error: action.payload,
+        }
     }
 
 }
@@ -39,19 +44,33 @@ const MyForm = () => {
     const [states, dispatch] = useReducer(redFunc, {
         title: "",
         description: "",
-        data: []
+        data: [],
+        setError: null,
     });
 
     const onSubmitHandler = (event: any) => {
         event.preventDefault();
-        console.log("submitted");
-        console.log(states.title, states.description);
+        // console.log("submitted");
+        // console.log(states.title, states.description);
+
+        if (states.title === "" || states.description === "") {
+            dispatch({
+                type: "setError",
+                payload: "Please enter someting in title and description in order to save",
+            });
+            return;
+        }
 
         dispatch({
             type: "pushData", payload: {
                 title: states.title,
                 description: states.description,
             }
+        });
+
+        dispatch({
+            type: "setError",
+            payload: null,
         });
 
         dispatch({
@@ -82,23 +101,31 @@ const MyForm = () => {
 
                 <section className='container md:w-[40vw]'  >
 
+                    {(states.error !== null) && <div className='text-red-500' >
+                        {states.error}
+                    </div>}
+
                     {
                         (states.data.length <= 0) && <div>
                             Please add some record using above form to show here
                         </div>
                     }
 
-                    {(states.data.length > 0) && <table>
-                        <tr>
-                            <th className='' > Title </th>
-                            <th className='pl-10' > Description </th>
-                        </tr>
-                        {states.data.map((singData: any, index: any) => (
-                            <tr key={index}>
-                                <td> <h2>{singData.title}</h2> </td>
-                                <td> <p className='mt-3' >{singData.description}</p> </td>
+                    {(states.data.length > 0) && <table className='my-10' >
+                        <thead>
+                            <tr className='text-left' >
+                                <th> Title </th>
+                                <th className='pl-20' > Description </th>
                             </tr>
-                        ))}
+                        </thead>
+                        <tbody>
+                            {states.data.map((singData: any, index: any) => (
+                                <tr className='text-left' key={index}>
+                                    <td> <h2>{singData.title}</h2> </td>
+                                    <td> <p className='pl-20'>{singData.description}</p> </td>
+                                </tr>
+                            ))}
+                        </tbody>
                     </table>}
 
                 </section>
