@@ -19,3 +19,7 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+h1, h2, p, input, textarea {
+  color: black;
+}
