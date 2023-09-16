@@ -124,7 +124,7 @@ const MyForm = () => {
 
     return (
         <>
-            <section className='md:mx-0 my-20 container flex items-center flex-col' >
+            <section className='md:mx-0 md:my-20 my-10 container flex items-center flex-col' >
                 <section className='w-[90%] md:w-[40vw] m-auto' >
                     <h1 className='text-3xl font-bold' >Save your record in your to do app</h1>
                     <form className='my-10' onSubmit={onSubmitHandler} >
