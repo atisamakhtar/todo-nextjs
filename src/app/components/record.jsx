@@ -1,4 +1,9 @@
-import React from 'react'
+"use client"
+
+import React from 'react';
+import { useState } from 'react';
+import PopupForm from "./popupForm";
+import styles from "./styles/popup.module.css";
 
 const Record = ({ dataArray, description, dispatch, title, indexId }) => {
   // const Record = ( {description, dispatch, title} ) => {
@@ -8,7 +13,9 @@ const Record = ({ dataArray, description, dispatch, title, indexId }) => {
 
   // console.log("props from record element : ", props);
 
-  let updatedData = [];
+  // ********** delete functionality written over here
+
+  let leftoverDataArray = [];
 
   const deleteHandler = (event) => {
 
@@ -16,33 +23,48 @@ const Record = ({ dataArray, description, dispatch, title, indexId }) => {
 
     if (userConfirmed) {
 
-      updatedData = dataArray.filter((element, index) => index != indexId)
+      leftoverDataArray = dataArray.filter((element, index) => index != indexId)
       console.log("User confirmed.");
 
       dispatch({
         type: "setStarterData",
-        payload: updatedData,
+        payload: leftoverDataArray,
       })
     }
   }
 
+  // ********** update functionality written over here
+
   const [showForm, setShowForm] = useState(false);
 
   const toggleForm = () => {
+    // console.log("Updated request form : ", title);
     setShowForm(!showForm);
+    console.log("Updated request form : ", title, showForm);
   };
 
   return (
-    <section className='flex justify-between items-center space-x-10 px-10 bg-purple-900 py-6 rounded-md mb-7' >
-      <div className='' >
-        <h2 className='text-2xl text-white' >{title}</h2>
-        <p className='text-gray-300 text-justify' >{description}</p>
+    <>
+      <section className='flex justify-between items-center space-x-10 px-10 bg-purple-900 py-6 rounded-md mb-7' >
+        <div className='' >
+          <h2 className='text-2xl text-white' >{title}</h2>
+          <p className='text-gray-300 text-justify' >{description}</p>
+        </div>
+        <div>
+          <button onClick={toggleForm} className='block hover:bg-slate-300 bg-slate-50 px-3 py-1 w-[100px] rounded-md my-1' >Update</button>
+          <button onClick={deleteHandler} className='block hover:bg-slate-300 bg-slate-50 px-3 py-1 w-[100px] rounded-md my-1' >Delete</button>
+        </div>
+      </section>
+
+      <div className={`${styles.popupForm} ${showForm ? 'show' : ''}`}  >
+        <PopupForm 
+          title={title} 
+          description={description} 
+          dispatch={dispatch}
+          toggleForm={toggleForm}
+        />
       </div>
-      <div>
-        <button className='block hover:bg-slate-300 bg-slate-50 px-3 py-1 w-[100px] rounded-md my-1' >Update</button>
-        <button onClick={deleteHandler} className='block hover:bg-slate-300 bg-slate-50 px-3 py-1 w-[100px] rounded-md my-1' >Delete</button>
-      </div>
-    </section>
+    </>
   )
 }
 
