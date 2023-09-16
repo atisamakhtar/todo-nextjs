@@ -106,16 +106,6 @@ const MyForm = () => {
 
         let updatedDataToSet: [] = states.data ;
 
-        // updatedDataToSet.push({
-        //     title: states.title,
-        //     description: states.description,
-        // });
-        // console.log("updatedDataToSet", updatedDataToSet);
-
-        // localStorage.setItem("record", JSON.stringify(
-        //     states.data
-        // ));
-
         dispatch({
             type: "setError",
             payload: null,
@@ -173,8 +163,11 @@ const MyForm = () => {
                             //     <td> <p className='pl-20'>{singData.description}</p> </td>
                             // </tr>
                             <Record
+                                dispatch={dispatch}
                                 key={index}
+                                indexId={index}
                                 title={singData.title}
+                                dataArray={states.data}
                                 description={singData.description}
                             />
                         ))}
