@@ -163,6 +163,7 @@ const MyForm = () => {
                             //     <td> <p className='pl-20'>{singData.description}</p> </td>
                             // </tr>
                             <Record
+                                states={states}
                                 dispatch={dispatch}
                                 key={index}
                                 indexId={index}

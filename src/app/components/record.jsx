@@ -5,18 +5,11 @@ import { useState } from 'react';
 import PopupForm from "./popupForm";
 import styles from "./styles/popup.module.css";
 
-const Record = ({ dataArray, description, dispatch, title, indexId }) => {
-  // const Record = ( {description, dispatch, title} ) => {
-
-  // console.log("states are : ", dataArray)
-  // console.log("Key : ", key);
-
-  // console.log("props from record element : ", props);
+const Record = ({states , dataArray, description, dispatch, title, indexId }) => {
 
   // ********** delete functionality written over here
 
   let leftoverDataArray = [];
-
   const deleteHandler = (event) => {
 
     const userConfirmed = confirm(`Are you sure you want to delete ${title}?`);
@@ -40,7 +33,7 @@ const Record = ({ dataArray, description, dispatch, title, indexId }) => {
   const toggleForm = () => {
     // console.log("Updated request form : ", title);
     setShowForm(!showForm);
-    console.log("Updated request form : ", title, showForm);
+    // console.log("Updated request form : ", title, showForm);
   };
 
   return (
@@ -56,14 +49,16 @@ const Record = ({ dataArray, description, dispatch, title, indexId }) => {
         </div>
       </section>
 
-      <div className={`${styles.popupForm} ${showForm ? 'show' : ''}`}  >
-        <PopupForm 
-          title={title} 
-          description={description} 
+      { showForm && <div className={`transition-opacity ease-in duration-700 opacity-100 ${styles.poupForm}`}  >
+        <PopupForm
+          title={title}
+          description={description}
+          states={states}
           dispatch={dispatch}
           toggleForm={toggleForm}
+          indexId={indexId}
         />
-      </div>
+      </div> }
     </>
   )
 }
