@@ -1,8 +1,7 @@
 "use client"
 
 import { ACTION } from 'next/dist/client/components/app-router-headers';
-import React from 'react';
-import { useReducer, useState } from 'react';
+import { useReducer, useState, useEffect } from 'react';
 import Record from './record';
 
 const redFunc = (currState: any, action: any) => {
@@ -31,6 +30,13 @@ const redFunc = (currState: any, action: any) => {
             ...currState,
             data: currState.data,
         }
+    } else if (action.type === "setStarterData") {
+        // console.log("pushing data to array");
+
+        return {
+            ...currState,
+            data: action.payload,
+        }
     } else if (action.type === "setError") {
         return {
             ...currState,
@@ -42,12 +48,41 @@ const redFunc = (currState: any, action: any) => {
 
 const MyForm = () => {
 
-    const [states, dispatch] = useReducer(redFunc, {
+    let initialReducerdata = {
         title: "",
         description: "",
         data: [],
         setError: null,
-    });
+    }
+
+    useEffect(() => {
+        console.log("useEffect running");
+        let getRecord: string | null = localStorage.getItem('record');
+        // console.log( JSON.parse(getRecord) );
+        // JSON.parse( localStorage.getItem('record') );
+
+        if (getRecord) {
+            getRecord = JSON.parse(getRecord);
+            console.log("getRecord not empty seting it in reducer");
+            console.log("states are : ", getRecord);
+
+            dispatch({ 
+                type: "setStarterData",
+                payload: getRecord,
+            })
+
+            // console.log("states are : ", states );
+        }
+
+    }, [])
+
+    const [states, dispatch] = useReducer(redFunc, initialReducerdata);
+
+    useEffect( () => {
+        localStorage.setItem("record", JSON.stringify(
+            states.data
+        ));
+    }, [states])
 
     const onSubmitHandler = (event: any) => {
         event.preventDefault();
@@ -68,6 +103,18 @@ const MyForm = () => {
                 description: states.description,
             }
         });
+
+        let updatedDataToSet: [] = states.data ;
+
+        // updatedDataToSet.push({
+        //     title: states.title,
+        //     description: states.description,
+        // });
+        // console.log("updatedDataToSet", updatedDataToSet);
+
+        // localStorage.setItem("record", JSON.stringify(
+        //     states.data
+        // ));
 
         dispatch({
             type: "setError",
