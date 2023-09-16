@@ -20,6 +20,6 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
-h1, h2, p, input, textarea {
+h1, h2, p, input, textarea, button {
   color: black;
 }

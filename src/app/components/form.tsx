@@ -124,9 +124,9 @@ const MyForm = () => {
 
     return (
         <>
-            <section className=' mx-4 md:mx-0 my-20 container flex items-center flex-col' >
-                <h1 className='text-3xl w-[100%] md:w-[40vw] font-bold' >Save your record in your to do app</h1>
-                <form className='my-10 w-[100%] md:w-[40vw]' onSubmit={onSubmitHandler} >
+            <section className='mx-4 md:mx-0 my-20 container flex items-center flex-col' >
+                <h1 className='text-3xl w-[90%] md:w-[40vw] font-bold' >Save your record in your to do app</h1>
+                <form className='my-10 w-[90%] md:w-[40vw]' onSubmit={onSubmitHandler} >
                     <div className='mt-5' >
                         <label className='mb-3' htmlFor="title">Title</label>
                         <input value={states.title} onChange={(e) => dispatch({ type: "titleUpdate", payload: e.target.value })} className='px-3 py-1 rounded-sm block w-[100%] border-2 border-gray-400 border-r-2 text-gray-950' type="text" id='title' />
@@ -150,7 +150,7 @@ const MyForm = () => {
                         </div>
                     }
 
-                    {(states.data.length > 0) && <div className='my-10 mx-4 md:mx-0' >
+                    {(states.data.length > 0) && <div className='my-10 w-[90%] md:w-[40vw]' >
 
                         {states.data.map((singData: any, index: any) => (
                             <Record
